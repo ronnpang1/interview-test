@@ -1,12 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
-
+import TopBar  from './TopBar';
 const API_URL = 'http://localhost:8099'
 
 function App() {
   return (
     <div className="App">
-      <h1>Planned Test</h1>
+      <TopBar></TopBar>
       <div>
         <button type="button">Retrieve Users</button>
       </div>
