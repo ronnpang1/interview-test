@@ -3,19 +3,31 @@ import image from './assets/logo.svg'
 import styled from "styled-components"
 
 const Container = styled.div`
-  height: 100px;
+  height: 64px;
+  width: 100%;
   postion: absolute;
   display: flex;
-  margin-bottom: 20px;
+  align-items: center;
 `
 
+const Image = styled.img`
+  float: left;
+  width: 64px;
+  height: 64px;
+`
+
+const Title = styled.div`
+  margin-left:5px;
+  font-weight: bold;
+  font-size: 24px;
+`
 
 class TopBar extends Component {
     render() {
         return (
                 <Container>
-                    <img style={{float: "left"}} width="84" src={image}></img>
-                    <h1 >Planned Test</h1>
+                    <Image  src={image}></Image>
+                    <Title >Planned Test</Title>
                 </Container>
         )
     }
