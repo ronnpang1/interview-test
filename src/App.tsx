@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import TopBar  from './TopBar';
-import MainPage  from './MainPage';
+import TopBar  from './components/TopBar';
+import MainPage  from './components/MainPage';
 
 const API_URL = 'http://localhost:8099'
 

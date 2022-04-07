@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import image from './assets/logo.svg'
+import image from '../assets/logo.svg'
 import styled from "styled-components"
 
 const Container = styled.div`
-  height: 64px;
+  height: 48px;
   width: 100%;
   postion: absolute;
   display: flex;
@@ -12,25 +12,26 @@ const Container = styled.div`
 
 const Image = styled.img`
   float: left;
-  width: 64px;
-  height: 64px;
+  width: 48px;
+  height: 48px;
 `
 
 const Title = styled.div`
-  margin-left:5px;
+  margin-left: 20px;
   font-weight: bold;
-  font-size: 24px;
+  font-size: 20px;
+  font-family: Arial, Helvetica, sans-serif;
 `
 
 class TopBar extends Component {
-    render() {
-        return (
-                <Container>
-                    <Image  src={image}></Image>
-                    <Title >Planned Test</Title>
-                </Container>
-        )
-    }
+  render() {
+    return (
+      <Container>
+        <Image src={image}></Image>
+        <Title >Planned Test</Title>
+      </Container>
+    )
+  }
 }
 
 export default TopBar;
