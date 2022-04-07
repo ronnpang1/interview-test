@@ -32,6 +32,7 @@ const ImgIcon = styled.img`
     width: 7px;
     height: 7px;
 `
+
 const Image = styled.img`
     float: left;
     position: absolute;
@@ -82,13 +83,11 @@ const NameData = styled.div`
     margin-top:4px;
     margin-left:20px;
 `
-
 const AgeData = styled.div`
     width: 43%;
     font-family: Arial, Helvetica, sans-serif;
     font-size:10px;
 `
-
 const TableRow = styled.div`
     width: 100%;
     height: 30px;
@@ -104,56 +103,63 @@ const SearchContainer = styled.div`
 
 export interface UserProps {
     minmax: MinMax;
-    originalList: []
+    originalList: [];
 }
-const UserBox: React.FC<UserProps> = ({ minmax, originalList }) => {
-    const [list, SetList] = useState<any>([]);
-    const [searchTerm, SetSearchTerm] = useState<string>("");
-    const [sortName, setSortName] = useState<boolean>(false)
-    const [sortAge, setSortAge] = useState<boolean>(false)
 
+const UserBox: React.FC<UserProps> = ({ minmax, originalList }) => {
+    // Set Mutable List
+    const [list, SetList] = useState<any>([]);
+    // Set search term
+    const [searchTerm, SetSearchTerm] = useState<string>("");
+    // Set sort name boolean
+    const [sortName, setSortName] = useState<boolean>(false);
+    // Set sort age boolean
+    const [sortAge, setSortAge] = useState<boolean>(false);
+
+    // helper to sort by age
     const sortByAge = () => {
         const sortedList = list.sort((a, b) => {
             if (a.age > b.age) return 1;
             if (a.age < b.age) return -1;
-            return 0
-        })
-        SetList(sortedList)
-    }
+            return 0;
+        });
+        SetList(sortedList);
+    };
 
+    // helper to sort by name
     const sortByName = () => {
         const sortedList = list.sort((a, b) => {
             if (a.name.firstName > b.name.firstName) return 1;
             if (a.name.firstName < b.name.firstName) return -1;
-            return 0
-        })
-        SetList(sortedList)
-    }
+            return 0;
+        });
+        SetList(sortedList);
+    };
 
+    // helper to filter by age
     const filterByAge = (item: any) => {
         if (minmax.min <= item.age && item.age <= minmax.max) {
-            return true
+            return true;
         }
         return false;
-    }
-    const filterAge = () => {
-        filter(originalList, minmax.min, minmax.max)
-    }
+    };
 
-    const filter = (userList: [], min: number, max: number) => {
-        const ageArrFiltered = userList.filter(filterByAge)
-        SetList(ageArrFiltered)
-    }
+    // function filters list by age and then sets the list
+    const filterAge = () => {
+        const ageArrFiltered = originalList.filter(filterByAge);
+        SetList(ageArrFiltered);
+    };
+
     useEffect(() => {
         if (sortName === true) {
-            sortByName()
+            sortByName();
         } else {
-            sortByAge()
+            sortByAge();
         }
     }, [sortName, sortAge]);
 
     useEffect(() => {
-        filterAge()
+        filterAge();
     }, [minmax, originalList]);
 
     return (
@@ -164,7 +170,6 @@ const UserBox: React.FC<UserProps> = ({ minmax, originalList }) => {
             </SearchContainer>
             <TableHeader>
                 <TableRow>
-
                     <NameHeader> Name
                         <span onClick={() => setSortName(!sortName)}>
                             <ImgIcon src={sort} >
@@ -178,17 +183,16 @@ const UserBox: React.FC<UserProps> = ({ minmax, originalList }) => {
                         </span>
                     </AgeHeader>
                 </TableRow>
-
             </TableHeader>
             <DataContainer>
-
+                {/* Takes search term and does include operation to see if string is in the first or last name */}
                 {list
                     .filter((item) =>
                         item.name.firstName.toLowerCase().includes(searchTerm.toLowerCase())
                         || item.name.lastName.toLowerCase().includes(searchTerm.toLowerCase())
                         || searchTerm === "")
                     .map((item, index) => (
-                        <TableRow>
+                        <TableRow key={index}>
                             <CheckBox type="checkbox" id="subscribeNews" name="subscribe" value="newsletter" />
 
                             <NameData>
@@ -198,46 +202,8 @@ const UserBox: React.FC<UserProps> = ({ minmax, originalList }) => {
                         </TableRow>
                     ))}
             </DataContainer>
-
-            {/* <TableWrapper>
-                <Table>
-                    <thead>
-                        <tr>
-                            <th></th>
-                            <Th>Name
-                                <span onClick={() => setSortName(!sortName)}>
-                                    <ImgIcon src={sort} >
-                                    </ImgIcon>
-                                </span>
-                            </Th>
-                            <th>Age
-                                <span onClick={() => setSortAge(!sortAge)}>
-                                    <ImgIcon src={sort} >
-                                    </ImgIcon>
-                                </span>
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {list
-                            .filter((item) =>
-                                item.name.firstName.toLowerCase().includes(searchTerm.toLowerCase())
-                                || item.name.lastName.toLowerCase().includes(searchTerm.toLowerCase())
-                                || searchTerm === "")
-                            .map((item, index) => (
-                                <Tr key={index}>
-                                    <InputTD> <input type="checkbox" id="subscribeNews" name="subscribe" value="newsletter" /></InputTD>
-                                    <TDName>{item.name.firstName} {item.name.lastName}</TDName>
-                                    <TDAge>{item.age}</TDAge>
-                                </Tr>
-                            ))}
-                    </tbody>
-
-                </Table>
-            </TableWrapper> */}
         </Container >
-    )
-
-}
+    );
+};
 
 export default UserBox;
